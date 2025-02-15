@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-
 import Button from "../ui/Button";
+
 
 function Carousel({ title, imageUrls }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -13,9 +13,16 @@ function Carousel({ title, imageUrls }) {
   }
 
   function handlePrev() {
-    (currentIndex - 1 + imageUrls.length) % imageUrls.length;
+    const previousIndex=(currentIndex - 1 + imageUrls.length) % imageUrls.length;
     setCurrentIndex(previousIndex);
   }
+
+  useEffect(() => {
+    
+     const interval = setInterval(handleNext, 3000);
+
+     return () => clearInterval(interval);
+   }, [handleNext]);
 
   return (
     <div className="flex flex-col items-center gap-1">
