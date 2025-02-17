@@ -1,8 +1,11 @@
+/*eslint-disable*/
 import Carousel from "./Carousel";
 import { IMAGE_URLS } from "../constants";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Spinner from "../ui/Spinner";
+import productsApi from "../apis/products";
+
 
 
 function Product() {
@@ -10,18 +13,15 @@ function Product() {
   const [isLoading, setIsLoading] = useState(false);
 
  const fetchProduct = async () => {
-   try {
-     setIsLoading(true);
-     const response = await axios.get(
-       "https://smile-cart-backend-staging.neetodeployapp.com/products/infinix-inbook-2"
-     );
-     setProduct(response.data);
-   } catch (error) {
-     console.log("An error occurred:", error);
-   } finally {
-     setIsLoading(false);
-   }
- };
+  try {
+    const response = await productsApi.show();
+    setProduct(response.data);
+  } catch (error) {
+    console.log("An error occurred:", error);
+  } finally {
+    setIsLoading(false);
+  }
+};
    useEffect(() => {
      fetchProduct();
    }, []);
